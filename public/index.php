@@ -7,7 +7,7 @@ use function FastRoute\simpleDispatcher;
 
 require dirname(__DIR__) . '/vendor/autoload.php';
 
-$dispatcher = simpleDispatcher(require dirname(__DIR__) . '/routes/web.php');
+$dispatcher = simpleDispatcher(require dirname(__DIR__) . '/routes/routes.php');
 $path = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH) ?: '/';
 $method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
 
