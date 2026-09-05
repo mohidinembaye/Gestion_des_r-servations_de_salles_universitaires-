@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Repository;
 
+use App\DTO\CreerReservationDTO;
 use App\Model\Reservation;
 use DateTimeImmutable;
 use Illuminate\Database\Eloquent\Collection;
@@ -36,8 +37,24 @@ final class EloquentReservationRepository implements ReservationRepositoryInterf
             ->exists();
     }
 
-    public function enregistrer(Reservation $reservation): Reservation
+    public function enregistrer(CreerReservationDTO $dto): Reservation
     {
+        $reservation = new Reservation(
+            null,
+            $dto->getResponsable(),
+            $dto->getEmail(),
+            $dto->getMotif(),
+            $dto->getDateDebut(),
+            $dto->getDateFin(),
+            'confirmée'
+        );
+        $reservation->setAttribute('salle_id', $dto->getSalleId());
+        $reservation->setAttribute('responsable', $dto->getResponsable());
+        $reservation->setAttribute('email', $dto->getEmail());
+        $reservation->setAttribute('motif', $dto->getMotif());
+        $reservation->setAttribute('date_debut', $dto->getDateDebut());
+        $reservation->setAttribute('date_fin', $dto->getDateFin());
+        $reservation->setAttribute('statut', 'confirmée');
         $reservation->save();
 
         return $reservation;

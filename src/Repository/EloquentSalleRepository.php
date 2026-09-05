@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Repository;
 
+use App\DTO\CreerSalleDTO;
 use App\Model\Salle;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -19,8 +20,38 @@ final class EloquentSalleRepository implements SalleRepositoryInterface
         return Salle::query()->find($id);
     }
 
-    public function enregistrer(Salle $salle): Salle
+    public function enregistrer(CreerSalleDTO $dto): Salle
     {
+        $salle = new Salle(
+            $dto->getNom(),
+            $dto->getBatiment(),
+            $dto->getCapacite(),
+            $dto->getType(),
+            $dto->isActive()
+        );
+        $salle->setAttribute('nom', $dto->getNom());
+        $salle->setAttribute('batiment', $dto->getBatiment());
+        $salle->setAttribute('capacite', $dto->getCapacite());
+        $salle->setAttribute('type', $dto->getType());
+        $salle->setAttribute('active', $dto->isActive());
+        $salle->save();
+
+        return $salle;
+    }
+
+    public function modifier(int $id, CreerSalleDTO $dto): Salle
+    {
+        $salle = $this->trouver($id);
+
+        if ($salle === null) {
+            throw new \RuntimeException('Salle introuvable.');
+        }
+
+        $salle->setAttribute('nom', $dto->getNom());
+        $salle->setAttribute('batiment', $dto->getBatiment());
+        $salle->setAttribute('capacite', $dto->getCapacite());
+        $salle->setAttribute('type', $dto->getType());
+        $salle->setAttribute('active', $dto->isActive());
         $salle->save();
 
         return $salle;

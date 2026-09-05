@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Repository;
 
+use App\DTO\CreerReservationDTO;
 use App\Model\Reservation;
 use DateTimeImmutable;
 use Illuminate\Database\Eloquent\Collection;
@@ -16,7 +17,7 @@ interface ReservationRepositoryInterface
 
     public function rechercherConflit(int $salleId, DateTimeImmutable $dateDebut, DateTimeImmutable $dateFin): bool;
 
-    public function enregistrer(Reservation $reservation): Reservation;
+    public function enregistrer(CreerReservationDTO $dto): Reservation;
 
     public function annuler(Reservation $reservation): Reservation;
 }

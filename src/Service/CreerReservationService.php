@@ -6,7 +6,6 @@ namespace App\Service;
 
 use App\DTO\CreerReservationDTO;
 use App\Exception\SalleIndisponibleException;
-use App\Model\Reservation;
 use App\Repository\ReservationRepositoryInterface;
 use App\Repository\SalleRepositoryInterface;
 use DateTimeImmutable;
@@ -21,7 +20,7 @@ final class CreerReservationService
     ) {
     }
 
-    public function executer(CreerReservationDTO $dto): Reservation
+    public function executer(CreerReservationDTO $dto): \App\Model\Reservation
     {
         $salle = $this->salles->trouver($dto->getSalleId());
 
@@ -51,23 +50,6 @@ final class CreerReservationService
 
         $this->disponibilite->verifier($salle, $dateDebut, $dateFin);
 
-        $reservation = new Reservation(
-            $salle,
-            $dto->getResponsable(),
-            $dto->getEmail(),
-            $dto->getMotif(),
-            $dateDebut,
-            $dateFin,
-            'confirmée'
-        );
-        $reservation->setAttribute('salle_id', $dto->getSalleId());
-        $reservation->setAttribute('responsable', $dto->getResponsable());
-        $reservation->setAttribute('email', $dto->getEmail());
-        $reservation->setAttribute('motif', $dto->getMotif());
-        $reservation->setAttribute('date_debut', $dateDebut);
-        $reservation->setAttribute('date_fin', $dateFin);
-        $reservation->setAttribute('statut', 'confirmée');
-
-        return $this->reservations->enregistrer($reservation);
+        return $this->reservations->enregistrer($dto);
     }
 }

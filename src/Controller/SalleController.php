@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\DTO\CreerSalleDTOBuilder;
-use App\Model\Salle;
 use App\Repository\SalleRepositoryInterface;
 use App\Validation\SalleValidator;
 use App\View\ViewRenderer;
@@ -62,18 +61,19 @@ final class SalleController
             ]);
         }
 
-        $salle = $this->salles->trouver($id);
-        if ($salle === null) {
+        if ($this->salles->trouver($id) === null) {
             return $this->view->render('error/404');
         }
 
         $accepted = $result->data();
-        $salle->setAttribute('nom', $accepted['nom']);
-        $salle->setAttribute('batiment', $accepted['batiment']);
-        $salle->setAttribute('capacite', $accepted['capacite']);
-        $salle->setAttribute('type', $accepted['type']);
-        $salle->setAttribute('active', $accepted['active']);
-        $this->salles->enregistrer($salle);
+        $dto = (new CreerSalleDTOBuilder())
+            ->nom($accepted['nom'])
+            ->batiment($accepted['batiment'])
+            ->capacite($accepted['capacite'])
+            ->type($accepted['type'])
+            ->active($accepted['active'])
+            ->build();
+        $this->salles->modifier($id, $dto);
 
         header('Location: /salles/' . $id);
 
@@ -99,19 +99,7 @@ final class SalleController
             ->active($result->data()['active'])
             ->build();
 
-        $salle = new Salle(
-            $dto->getNom(),
-            $dto->getBatiment(),
-            $dto->getCapacite(),
-            $dto->getType(),
-            $dto->isActive()
-        );
-        $salle->setAttribute('nom', $dto->getNom());
-        $salle->setAttribute('batiment', $dto->getBatiment());
-        $salle->setAttribute('capacite', $dto->getCapacite());
-        $salle->setAttribute('type', $dto->getType());
-        $salle->setAttribute('active', $dto->isActive());
-        $this->salles->enregistrer($salle);
+        $this->salles->enregistrer($dto);
 
         header('Location: /salles');
         return '';
