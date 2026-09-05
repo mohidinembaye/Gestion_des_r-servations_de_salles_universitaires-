@@ -21,10 +21,6 @@ CREATE TABLE IF NOT EXISTS reservations (
     statut ENUM('confirmée', 'annulée') NOT NULL DEFAULT 'confirmée',
     created_at TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    CONSTRAINT fk_reservations_salle
-        FOREIGN KEY (salle_id) REFERENCES salles (id)
-        ON UPDATE CASCADE
-        ON DELETE RESTRICT,
     INDEX idx_reservations_salle_dates (salle_id, date_debut, date_fin),
     INDEX idx_reservations_statut (statut)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

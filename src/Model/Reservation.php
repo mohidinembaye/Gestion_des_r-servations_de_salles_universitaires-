@@ -13,32 +13,36 @@ final class Reservation extends Model
     protected $table = 'reservations';
 
     private ?int $id = null;
-    private ?int $salleId = null;
+    private ?Salle $salle = null;
     private ?string $responsable = null;
     private ?string $email = null;
     private ?string $motif = null;
-    private ?DateTimeImmutable $dateDebut = null;
-    private ?DateTimeImmutable $dateFin = null;
     private ?string $statut = null;
+    private ?DateTimeImmutable $createdAt = null;
+    private ?DateTimeImmutable $updatedAt = null;
 
     public function __construct(
-        ?int $salleId = null,
+        ?Salle $salle = null,
         ?string $responsable = null,
         ?string $email = null,
         ?string $motif = null,
         ?DateTimeImmutable $dateDebut = null,
         ?DateTimeImmutable $dateFin = null,
-        ?string $statut = null
+        ?string $statut = null,
+        ?DateTimeImmutable $createdAt = null,
+        ?DateTimeImmutable $updatedAt = null
     ) {
         parent::__construct();
 
-        $this->salleId = $salleId;
+        $this->salle = $salle;
         $this->responsable = $responsable;
         $this->email = $email;
         $this->motif = $motif;
         $this->dateDebut = $dateDebut;
         $this->dateFin = $dateFin;
         $this->statut = $statut;
+        $this->createdAt = $createdAt;
+        $this->updatedAt = $updatedAt;
     }
 
     public function getId(): ?int
@@ -48,7 +52,7 @@ final class Reservation extends Model
 
     public function getSalleId(): ?int
     {
-        return $this->salleId ?? $this->getAttribute('salle_id');
+        return $this->salle?->getId() ?? $this->getAttribute('salle_id');
     }
 
     public function getResponsable(): ?string
@@ -81,7 +85,21 @@ final class Reservation extends Model
         return $this->statut ?? $this->getAttribute('statut');
     }
 
-    /** @return BelongsTo<Salle, $this> */
+    public function getCreatedAt(): ?DateTimeImmutable
+    {
+        return $this->createdAt ?? $this->getAttribute('created_at');
+    }
+
+    public function getUpdatedAt(): ?DateTimeImmutable
+    {
+        return $this->updatedAt ?? $this->getAttribute('updated_at');
+    }
+
+    public function getSalle(): ?Salle
+    {
+        return $this->salle ?? $this->getRelationValue('salle');
+    }
+
     public function salle(): BelongsTo
     {
         return $this->belongsTo(Salle::class, 'salle_id');

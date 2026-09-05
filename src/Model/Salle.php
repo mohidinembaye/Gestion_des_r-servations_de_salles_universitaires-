@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model;
 
+use DateTimeImmutable;
 use Illuminate\Database\Eloquent\HasMany;
 use Illuminate\Database\Eloquent\Model;
 
@@ -17,13 +18,17 @@ final class Salle extends Model
     private ?int $capacite = null;
     private ?string $type = null;
     private ?bool $active = null;
+    private ?DateTimeImmutable $createdAt = null;
+    private ?DateTimeImmutable $updatedAt = null;
 
     public function __construct(
         ?string $nom = null,
         ?string $batiment = null,
         ?int $capacite = null,
         ?string $type = null,
-        ?bool $active = null
+        ?bool $active = null,
+        ?DateTimeImmutable $createdAt = null,
+        ?DateTimeImmutable $updatedAt = null
     ) {
         parent::__construct();
 
@@ -32,6 +37,8 @@ final class Salle extends Model
         $this->capacite = $capacite;
         $this->type = $type;
         $this->active = $active;
+        $this->createdAt = $createdAt;
+        $this->updatedAt = $updatedAt;
     }
 
     public function getId(): ?int
@@ -64,7 +71,16 @@ final class Salle extends Model
         return $this->active ?? $this->getAttribute('active');
     }
 
-    /** @return HasMany<Reservation, $this> */
+    public function getCreatedAt(): ?DateTimeImmutable
+    {
+        return $this->createdAt ?? $this->getAttribute('created_at');
+    }
+
+    public function getUpdatedAt(): ?DateTimeImmutable
+    {
+        return $this->updatedAt ?? $this->getAttribute('updated_at');
+    }
+
     public function reservations(): HasMany
     {
         return $this->hasMany(Reservation::class, 'salle_id');
