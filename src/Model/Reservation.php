@@ -17,6 +17,8 @@ final class Reservation extends Model
     private ?string $responsable = null;
     private ?string $email = null;
     private ?string $motif = null;
+    private ?DateTimeImmutable $dateDebut = null;
+    private ?DateTimeImmutable $dateFin = null;
     private ?string $statut = null;
     private ?DateTimeImmutable $createdAt = null;
     private ?DateTimeImmutable $updatedAt = null;
