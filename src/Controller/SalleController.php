@@ -41,6 +41,45 @@ final class SalleController
         ]);
     }
 
+    public function edit(int $id): string
+    {
+        return $this->view->render('salle/form', [
+            'salle' => $this->salles->trouver($id),
+            'errors' => [],
+            'values' => [],
+        ]);
+    }
+
+    public function update(int $id, array $data): string
+    {
+        $result = $this->validator->validate($data);
+
+        if (!$result->isValid()) {
+            return $this->view->render('salle/form', [
+                'salle' => $this->salles->trouver($id),
+                'errors' => $result->errors(),
+                'values' => $data,
+            ]);
+        }
+
+        $salle = $this->salles->trouver($id);
+        if ($salle === null) {
+            return $this->view->render('error/404');
+        }
+
+        $accepted = $result->data();
+        $salle->setAttribute('nom', $accepted['nom']);
+        $salle->setAttribute('batiment', $accepted['batiment']);
+        $salle->setAttribute('capacite', $accepted['capacite']);
+        $salle->setAttribute('type', $accepted['type']);
+        $salle->setAttribute('active', $accepted['active']);
+        $this->salles->enregistrer($salle);
+
+        header('Location: /salles/' . $id);
+
+        return '';
+    }
+
     public function store(array $data): string
     {
         $result = $this->validator->validate($data);
