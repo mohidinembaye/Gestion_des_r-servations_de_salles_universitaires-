@@ -14,6 +14,20 @@ final class ViewRenderer
             throw new \RuntimeException('Vue introuvable : ' . $template);
         }
 
+        $content = $this->renderTemplate($path, $data);
+
+        if ($template === 'layout/base') {
+            return $content;
+        }
+
+        return $this->renderTemplate(
+            dirname(__DIR__, 2) . '/templates/layout/base.php',
+            $data + ['content' => $content, 'title' => $data['title'] ?? 'Réservations']
+        );
+    }
+
+    private function renderTemplate(string $path, array $data): string
+    {
         extract($data, EXTR_SKIP);
         ob_start();
         require $path;
