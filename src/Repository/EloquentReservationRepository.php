@@ -7,10 +7,16 @@ namespace App\Repository;
 use App\DTO\CreerReservationDTO;
 use App\Model\Reservation;
 use DateTimeImmutable;
+use Illuminate\Database\Capsule\Manager;
 use Illuminate\Database\Eloquent\Collection;
 
 final class EloquentReservationRepository implements ReservationRepositoryInterface
 {
+    public function __construct(
+        private Manager $database
+    ) {
+    }
+
     public function lister(?int $salleId = null): Collection
     {
         $query = Reservation::query()->with('salle')->orderBy('date_debut');

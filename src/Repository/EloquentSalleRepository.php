@@ -6,10 +6,16 @@ namespace App\Repository;
 
 use App\DTO\CreerSalleDTO;
 use App\Model\Salle;
+use Illuminate\Database\Capsule\Manager;
 use Illuminate\Database\Eloquent\Collection;
 
 final class EloquentSalleRepository implements SalleRepositoryInterface
 {
+    public function __construct(
+        private Manager $database
+    ) {
+    }
+
     public function lister(): Collection
     {
         return Salle::query()->orderBy('nom')->get();
