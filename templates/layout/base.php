@@ -6,14 +6,19 @@
     <link rel="stylesheet" href="/assets/style.css">
 </head>
 <body>
-<header>
-    <a href="/">Réservations universitaires</a>
+<header class="site-header">
+    <div class="header-inner">
+        <a class="brand" href="/">
+            <span class="brand-mark">RU</span>
+            <span>Réservations universitaires</span>
+        </a>
     <nav>
         <a href="/salles">Salles</a>
         <a href="/reservations">Réservations</a>
         <a href="/reservations/create">Nouvelle réservation</a>
     </nav>
+    </div>
 </header>
-<main><?= $content ?? '' ?></main>
+<main class="page-shell"><?= $content ?? '' ?></main>
 </body>
 </html>

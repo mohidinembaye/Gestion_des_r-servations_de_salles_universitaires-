@@ -12,7 +12,8 @@
     --primary: #0f766e;
     --primary-dark: #115e59;
     --danger: #b91c1c;
-    --shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+    --shadow: 0 18px 45px rgba(15, 23, 42, 0.10);
+    --accent: #f59e0b;
 }
 
 body {
@@ -25,9 +26,18 @@ body {
 }
 
 header {
-    padding: 1rem 5vw;
-    background: var(--ink);
+    padding: 1.15rem 5vw;
+    background: linear-gradient(110deg, #172554, #0f766e);
     box-shadow: var(--shadow);
+}
+
+.header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    width: min(1100px, 100%);
+    margin: 0 auto;
 }
 
 header a {
@@ -35,6 +45,23 @@ header a {
     font-size: 1.15rem;
     font-weight: 700;
     text-decoration: none;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+}
+
+.brand-mark {
+    display: grid;
+    width: 2.25rem;
+    height: 2.25rem;
+    place-items: center;
+    color: var(--ink);
+    background: #fef3c7;
+    border-radius: 8px;
+    font-size: 0.8rem;
 }
 
 nav {
@@ -50,8 +77,8 @@ nav a {
 }
 
 main {
-    width: min(960px, calc(100% - 2rem));
-    margin: 3rem auto;
+    width: min(1100px, calc(100% - 2rem));
+    margin: 3.5rem auto;
     padding: clamp(1.25rem, 4vw, 3rem);
     background: rgba(255, 255, 255, 0.92);
     border: 1px solid rgba(219, 227, 236, 0.9);
@@ -64,6 +91,36 @@ h1 {
     color: var(--ink);
     font-size: clamp(1.8rem, 4vw, 2.7rem);
     line-height: 1.1;
+}
+
+.page-heading {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.eyebrow {
+    margin: 0 0 0.5rem;
+    color: var(--primary);
+    font-family: Arial, sans-serif;
+    font-size: 0.76rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.intro {
+    max-width: 36rem;
+    margin: 0;
+    font-size: 1.05rem;
+}
+
+.action-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.7rem;
 }
 
 h2 {
@@ -131,12 +188,117 @@ ul {
     list-style: none;
 }
 
+.card-grid {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
 li {
     padding: 1rem;
     background: var(--surface);
     border: 1px solid var(--line);
     border-left: 4px solid var(--primary);
     border-radius: 6px;
+}
+
+.room-card {
+    min-height: 185px;
+    border: 1px solid var(--line);
+    border-left: 0;
+    border-top: 4px solid var(--primary);
+    transition: transform 160ms ease, box-shadow 160ms ease;
+}
+
+.room-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow);
+}
+
+.room-card h2 {
+    margin: 1rem 0 0.35rem;
+    font-size: 1.25rem;
+}
+
+.room-card h2 a {
+    color: var(--ink);
+    text-decoration: none;
+}
+
+.card-topline,
+.booking-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.room-type {
+    color: var(--muted);
+    font-family: Arial, sans-serif;
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.status {
+    display: inline-block;
+    padding: 0.25rem 0.55rem;
+    border-radius: 999px;
+    font-family: Arial, sans-serif;
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.status-active {
+    color: #166534;
+    background: #dcfce7;
+}
+
+.status-cancelled {
+    color: #991b1b;
+    background: #fee2e2;
+}
+
+.booking-list {
+    gap: 0.85rem;
+}
+
+.booking-row {
+    border-left: 4px solid var(--accent);
+}
+
+.booking-date {
+    display: grid;
+    min-width: 4rem;
+    color: var(--primary-dark);
+    text-align: center;
+}
+
+.booking-date strong {
+    font-size: 1.25rem;
+}
+
+.booking-date span {
+    color: var(--muted);
+    font-family: Arial, sans-serif;
+    font-size: 0.8rem;
+}
+
+.booking-main {
+    flex: 1;
+}
+
+.booking-main p {
+    margin: 0.2rem 0 0;
+    font-size: 0.92rem;
+}
+
+.empty-state {
+    padding: 2rem;
+    text-align: center;
+    background: #f0fdfa;
+    border: 1px dashed #99f6e4;
+    border-radius: 8px;
 }
 
 p {
@@ -158,5 +320,20 @@ form p {
 
     header {
         padding: 0.85rem 1rem;
+    }
+
+    .header-inner,
+    .page-heading {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    nav {
+        gap: 0.7rem;
+    }
+
+    .booking-row {
+        align-items: flex-start;
+        flex-wrap: wrap;
     }
 }
