@@ -17,8 +17,6 @@ final class Reservation extends Model
     private ?string $responsable = null;
     private ?string $email = null;
     private ?string $motif = null;
-    private ?DateTimeImmutable $dateDebut = null;
-    private ?DateTimeImmutable $dateFin = null;
     private ?string $statut = null;
     private ?DateTimeImmutable $createdAt = null;
     private ?DateTimeImmutable $updatedAt = null;
@@ -99,7 +97,11 @@ final class Reservation extends Model
 
     public function getSalle(): ?Salle
     {
-        return $this->salle ?? $this->getRelationValue('salle');
+        if ($this->salle !== null) {
+            return $this->salle;
+        }
+
+        return $this->relationLoaded('salle') ? $this->getRelationValue('salle') : null;
     }
 
     public function salle(): BelongsTo
