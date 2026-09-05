@@ -59,9 +59,20 @@ final class ReservationValidator implements ValidatorInterface
             return;
         }
 
-        $date = DateTimeImmutable::createFromFormat('Y-m-d H:i:s', $value);
-        $dateErrors = DateTimeImmutable::getLastErrors();
-        if ($date === false || ($dateErrors !== false && ($dateErrors['warning_count'] > 0 || $dateErrors['error_count'] > 0))) {
+        $formats = ['Y-m-d\\TH:i', 'Y-m-d H:i:s'];
+        $date = false;
+
+        foreach ($formats as $format) {
+            $candidate = DateTimeImmutable::createFromFormat($format, $value);
+            $dateErrors = DateTimeImmutable::getLastErrors();
+
+            if ($candidate !== false && ($dateErrors === false || ($dateErrors['warning_count'] === 0 && $dateErrors['error_count'] === 0))) {
+                $date = $candidate;
+                break;
+            }
+        }
+
+        if ($date === false) {
             $errors[$field] = 'La date est invalide.';
             return;
         }
