@@ -2,12 +2,13 @@
 
 declare(strict_types=1);
 
+use App\Container\ContainerFactory;
 use FastRoute\Dispatcher;
-use function FastRoute\simpleDispatcher;
 
 require dirname(__DIR__) . '/vendor/autoload.php';
 
-$dispatcher = simpleDispatcher(require dirname(__DIR__) . '/routes/routes.php');
+$container = (new ContainerFactory())->create();
+$dispatcher = $container->get(Dispatcher::class);
 $path = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH) ?: '/';
 $method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
 
@@ -25,7 +26,15 @@ switch ($route[0]) {
         break;
     case Dispatcher::FOUND:
         [$controller, $action] = $route[1];
-        http_response_code(501);
-        echo 'Route trouvée : ' . htmlspecialchars($controller . '::' . $action, ENT_QUOTES, 'UTF-8');
+        $instance = $container->get($controller);
+        $parameters = array_map(static function (string $value): int {
+            return (int) $value;
+        }, $route[2]);
+
+        if (in_array($action, ['store', 'update'], true)) {
+            $parameters[] = $_POST;
+        }
+
+        echo $instance->$action(...$parameters);
         break;
 }
