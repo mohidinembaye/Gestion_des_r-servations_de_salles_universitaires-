@@ -1,0 +1,64 @@
+
+services:
+  app:
+    build: .
+    image: reservation-salles-app:1.0
+    container_name: reservation_salles_app
+    environment:
+      APP_ENV: development
+      APP_DEBUG: "true"
+      DB_DRIVER: mysql
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_DATABASE: reservation_salles
+      DB_USERNAME: reservation_user
+      DB_PASSWORD: reservation123
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - .:/var/www/html
+    networks:
+      - reservation_network
+
+  webserver:
+    image: nginx:stable-alpine
+    container_name: reservation_salles_nginx
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/var/www/html
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - app
+    networks:
+      - reservation_network
+
+  db:
+    image: mysql:8.0
+    container_name: reservation_salles_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: reservation_salles
+      MYSQL_USER: reservation_user
+      MYSQL_PASSWORD: reservation123
+    ports:
+      - "3307:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./database/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-prootpassword"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    networks:
+      - reservation_network
+
+volumes:
+  db_data:
+
+networks:
+  reservation_network:
+    driver: bridge

@@ -1,0 +1,46 @@
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = false
+	logallrefupdates = true
+[remote "origin"]
+	url = https://github.com/mohidinembaye/Gestion_des_r-servations_de_salles_universitaires-.git
+	fetch = +refs/heads/*:refs/remotes/origin/*
+[branch "main"]
+	remote = origin
+	merge = refs/heads/main
+[branch "feature/01-composer"]
+	remote = origin
+	merge = refs/heads/feature/01-composer
+[branch "feature/02-eloquent"]
+	remote = origin
+	merge = refs/heads/feature/02-eloquent
+[branch "feature/03-modeles"]
+	remote = origin
+	merge = refs/heads/feature/03-modeles
+[branch "feature/04-donnees-initiales"]
+	remote = origin
+	merge = refs/heads/feature/04-donnees-initiales
+[branch "feature/05-validation"]
+	vscode-merge-base = origin/feature/04-donnees-initiales
+	remote = origin
+	merge = refs/heads/feature/05-validation
+[branch "feature/06-dto"]
+	remote = origin
+	merge = refs/heads/feature/06-dto
+[branch "feature/07-repositories"]
+	remote = origin
+	merge = refs/heads/feature/07-repositories
+[branch "feature/08-services"]
+	remote = origin
+	merge = refs/heads/feature/08-services
+[branch "feature/09-interface-web"]
+	remote = origin
+	merge = refs/heads/feature/09-interface-web
+[branch "feature/10-router"]
+	remote = origin
+	merge = refs/heads/feature/10-router
+[branch "feature/11-container"]
+	remote = origin
+	merge = refs/heads/feature/11-container
+	vscode-merge-base = origin/feature/10-router

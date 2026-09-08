@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\DTO\CreerReservationDTOBuilder;
+use App\DTO\CreerReservationDTO;
 use App\Exception\ReservationIntrouvableException;
 use App\Repository\ReservationRepositoryInterface;
 use App\Repository\SalleRepositoryInterface;
@@ -58,32 +59,33 @@ final class ReservationController
     }
 
     public function store(array $data): string
-    {
-        $result = $this->validator->validate($data);
+{
+    $result = $this->validator->validate($data);
 
-        if (!$result->isValid()) {
-            return $this->view->render('reservation/form', [
-                'salles' => $this->salles->lister(),
-                'errors' => $result->errors(),
-                'values' => $data,
-            ]);
-        }
-
-        $accepted = $result->data();
-        $dto = (new CreerReservationDTOBuilder())
-            ->salleId($accepted['salle_id'])
-            ->responsable($accepted['responsable'])
-            ->email($accepted['email'])
-            ->motif($accepted['motif'])
-            ->dateDebut(new DateTimeImmutable($accepted['date_debut']))
-            ->dateFin(new DateTimeImmutable($accepted['date_fin']))
-            ->build();
-
-        $this->creation->executer($dto);
-        header('Location: /reservations');
-
-        return '';
+    if (!$result->isValid()) {
+        return $this->view->render('reservation/form', [
+            'salles' => $this->salles->lister(),
+            'errors' => $result->errors(),
+            'values' => $data,
+        ]);
     }
+
+    $dto = CreerReservationDTO::fromArray($result->data());
+
+    try {
+        $this->creation->executer($dto);
+    } catch (\InvalidArgumentException $e) {
+        return $this->view->render('reservation/form', [
+            'salles' => $this->salles->lister(),
+            'errors' => ['date_debut' => $e->getMessage()],
+            'values' => $data,
+        ]);
+    }
+
+    header('Location: /reservations');
+
+    return '';
+}
 
     public function cancel(int $id): string
     {

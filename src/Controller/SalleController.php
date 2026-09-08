@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\DTO\CreerSalleDTOBuilder;
+use App\DTO\CreerSalleDTO;
 use App\Repository\SalleRepositoryInterface;
 use App\Validation\SalleValidator;
 use App\View\ViewRenderer;
@@ -65,14 +65,7 @@ final class SalleController
             return $this->view->render('error/404');
         }
 
-        $accepted = $result->data();
-        $dto = (new CreerSalleDTOBuilder())
-            ->nom($accepted['nom'])
-            ->batiment($accepted['batiment'])
-            ->capacite($accepted['capacite'])
-            ->type($accepted['type'])
-            ->active($accepted['active'])
-            ->build();
+        $dto = CreerSalleDTO::fromArray($result->data());
         $this->salles->modifier($id, $dto);
 
         header('Location: /salles/' . $id);
@@ -91,17 +84,11 @@ final class SalleController
             ]);
         }
 
-        $dto = (new CreerSalleDTOBuilder())
-            ->nom($result->data()['nom'])
-            ->batiment($result->data()['batiment'])
-            ->capacite($result->data()['capacite'])
-            ->type($result->data()['type'])
-            ->active($result->data()['active'])
-            ->build();
+        $dto = CreerSalleDTO::fromArray($result->data());
 
         $this->salles->enregistrer($dto);
 
-        header('Location: /salles');
+        header('Location: /salles?created=1');
         return '';
     }
 }

@@ -5,12 +5,23 @@ declare(strict_types=1);
 namespace App\Model;
 
 use DateTimeImmutable;
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Model;
 
 final class Reservation extends Model
 {
     protected $table = 'reservations';
+
+    protected $fillable = [
+        'salle_id',
+        'responsable',
+        'email',
+        'motif',
+        'date_debut',
+        'date_fin',
+        'statut',
+    ];
 
     private ?int $id = null;
     private ?Salle $salle = null;
@@ -38,8 +49,6 @@ final class Reservation extends Model
         $this->responsable = $responsable;
         $this->email = $email;
         $this->motif = $motif;
-        $this->dateDebut = $dateDebut;
-        $this->dateFin = $dateFin;
         $this->statut = $statut;
         $this->createdAt = $createdAt;
         $this->updatedAt = $updatedAt;
@@ -72,12 +81,12 @@ final class Reservation extends Model
 
     public function getDateDebut(): ?DateTimeImmutable
     {
-        return $this->dateDebut ?? $this->getAttribute('date_debut');
+        return $this->toImmutableDate($this->getAttribute('date_debut'));
     }
 
     public function getDateFin(): ?DateTimeImmutable
     {
-        return $this->dateFin ?? $this->getAttribute('date_fin');
+        return $this->toImmutableDate($this->getAttribute('date_fin'));
     }
 
     public function getStatut(): ?string
@@ -87,12 +96,29 @@ final class Reservation extends Model
 
     public function getCreatedAt(): ?DateTimeImmutable
     {
-        return $this->createdAt ?? $this->getAttribute('created_at');
+        return $this->toImmutableDate($this->createdAt ?? $this->getAttribute('created_at'));
     }
 
     public function getUpdatedAt(): ?DateTimeImmutable
     {
-        return $this->updatedAt ?? $this->getAttribute('updated_at');
+        return $this->toImmutableDate($this->updatedAt ?? $this->getAttribute('updated_at'));
+    }
+
+    private function toImmutableDate(mixed $value): ?DateTimeImmutable
+    {
+        if ($value === null) {
+            return null;
+        }
+
+        if ($value instanceof DateTimeImmutable) {
+            return $value;
+        }
+
+        if ($value instanceof DateTimeInterface) {
+            return DateTimeImmutable::createFromInterface($value);
+        }
+
+        return new DateTimeImmutable((string) $value);
     }
 
     public function getSalle(): ?Salle

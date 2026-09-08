@@ -1,0 +1,34 @@
+0000000000000000000000000000000000000000 677ff7fc571cdd06172714b62c511c63f1a5b201 mohidinembaye <mohidinembaye@gmail.com> 1788639181 +0000	commit (initial): init: initialiser le dépôt
+677ff7fc571cdd06172714b62c511c63f1a5b201 15f4c98fe26bdc8b5ef204ffe8d502e725626918 mohidinembaye <mohidinembaye@gmail.com> 1788639231 +0000	commit: init: créer le projet PHP
+15f4c98fe26bdc8b5ef204ffe8d502e725626918 15f4c98fe26bdc8b5ef204ffe8d502e725626918 mohidinembaye <mohidinembaye@gmail.com> 1788640690 +0000	checkout: moving from main to feature/01-composer
+15f4c98fe26bdc8b5ef204ffe8d502e725626918 f64781a11cc0936a76151a4664e06840bea21265 mohidinembaye <mohidinembaye@gmail.com> 1788640751 +0000	commit: chore: configurer Composer et l autoloading
+f64781a11cc0936a76151a4664e06840bea21265 f64781a11cc0936a76151a4664e06840bea21265 mohidinembaye <mohidinembaye@gmail.com> 1788640764 +0000	checkout: moving from feature/01-composer to feature/02-eloquent
+f64781a11cc0936a76151a4664e06840bea21265 879d670fd18a42fbe586613afe97e4976ce6de5c mohidinembaye <mohidinembaye@gmail.com> 1788642740 +0000	commit: chore: configurer Eloquent et la connexion MySQL
+879d670fd18a42fbe586613afe97e4976ce6de5c 879d670fd18a42fbe586613afe97e4976ce6de5c mohidinembaye <mohidinembaye@gmail.com> 1788642803 +0000	checkout: moving from feature/02-eloquent to feature/03-modeles
+879d670fd18a42fbe586613afe97e4976ce6de5c 7df82fe071459836554f62ebc8533a84cb34eecc mohidinembaye <mohidinembaye@gmail.com> 1788642996 +0000	commit: feat: créer les modèles Salle et Reservation
+7df82fe071459836554f62ebc8533a84cb34eecc f1fa0ae612ec91a87cc964561c00adfd18913659 mohidinembaye <mohidinembaye@gmail.com> 1788643549 +0000	commit: fix: aligner les modeles sur le schema attendu
+f1fa0ae612ec91a87cc964561c00adfd18913659 f1fa0ae612ec91a87cc964561c00adfd18913659 mohidinembaye <mohidinembaye@gmail.com> 1788643549 +0000	checkout: moving from feature/03-modeles to feature/04-donnees-initiales
+f1fa0ae612ec91a87cc964561c00adfd18913659 74fb22ef2e3887557291be557644d69b1a2af589 mohidinembaye <mohidinembaye@gmail.com> 1788643630 +0000	commit: feat: ajouter les données initiales des salles
+74fb22ef2e3887557291be557644d69b1a2af589 0cc71cb953f7bd96fbfa4f86e063fec7e0928b3a mohidinembaye <mohidinembaye@gmail.com> 1788643943 +0000	commit: docs: documenter l architecture et les etapes du projet
+0cc71cb953f7bd96fbfa4f86e063fec7e0928b3a 0cc71cb953f7bd96fbfa4f86e063fec7e0928b3a mohidinembaye <mohidinembaye@gmail.com> 1788643968 +0000	checkout: moving from feature/04-donnees-initiales to feature/05-validation
+0cc71cb953f7bd96fbfa4f86e063fec7e0928b3a 25248e97ed58f6598d1215fd4a121d526cc4f7e5 mohidinembaye <mohidinembaye@gmail.com> 1788644199 +0000	commit: feat: ajouter la validation des donnees
+25248e97ed58f6598d1215fd4a121d526cc4f7e5 25248e97ed58f6598d1215fd4a121d526cc4f7e5 mohidinembaye <mohidinembaye@gmail.com> 1788644222 +0000	checkout: moving from feature/05-validation to feature/06-dto
+25248e97ed58f6598d1215fd4a121d526cc4f7e5 88be48670e7940a915d34f06801d714227e39f90 mohidinembaye <mohidinembaye@gmail.com> 1788644431 +0000	commit: feat: ajouter les DTO et leurs builders
+88be48670e7940a915d34f06801d714227e39f90 88be48670e7940a915d34f06801d714227e39f90 mohidinembaye <mohidinembaye@gmail.com> 1788644481 +0000	checkout: moving from feature/06-dto to feature/07-repositories
+88be48670e7940a915d34f06801d714227e39f90 0f9705c19d260dfdf717031938765f9f9650f3d4 mohidinembaye <mohidinembaye@gmail.com> 1788645346 +0000	commit: feat: ajouter les repositories Eloquent
+0f9705c19d260dfdf717031938765f9f9650f3d4 0f9705c19d260dfdf717031938765f9f9650f3d4 mohidinembaye <mohidinembaye@gmail.com> 1788645353 +0000	checkout: moving from feature/07-repositories to feature/08-services
+0f9705c19d260dfdf717031938765f9f9650f3d4 0555174ff3e6392515cc8dbce588083517757e17 mohidinembaye <mohidinembaye@gmail.com> 1788645425 +0000	commit: feat: implementer les services metier
+0555174ff3e6392515cc8dbce588083517757e17 0555174ff3e6392515cc8dbce588083517757e17 mohidinembaye <mohidinembaye@gmail.com> 1788645509 +0000	checkout: moving from feature/08-services to feature/09-interface-web
+0555174ff3e6392515cc8dbce588083517757e17 7a306224d51f11fe022532e3149bf5ad40ef208d mohidinembaye <mohidinembaye@gmail.com> 1788645584 +0000	commit: feat: ajouter les controleurs et les vues
+7a306224d51f11fe022532e3149bf5ad40ef208d 7a306224d51f11fe022532e3149bf5ad40ef208d mohidinembaye <mohidinembaye@gmail.com> 1788645622 +0000	checkout: moving from feature/09-interface-web to feature/10-router
+7a306224d51f11fe022532e3149bf5ad40ef208d 17624140fad8430824f748c102b22ff9b5513e36 mohidinembaye <mohidinembaye@gmail.com> 1788645677 +0000	commit: feat: configurer le routeur FastRoute
+17624140fad8430824f748c102b22ff9b5513e36 1d33b7b62e3dff2dbe18861ce173d384e9952e64 mohidinembaye <mohidinembaye@gmail.com> 1788645832 +0000	commit: fix: centraliser les routes dans routes.php
+1d33b7b62e3dff2dbe18861ce173d384e9952e64 1d33b7b62e3dff2dbe18861ce173d384e9952e64 mohidinembaye <mohidinembaye@gmail.com> 1788645860 +0000	checkout: moving from feature/10-router to feature/11-container
+1d33b7b62e3dff2dbe18861ce173d384e9952e64 a92fb011b699497f385481348b1fd65acc9b251c mohidinembaye <mohidinembaye@gmail.com> 1788646555 +0000	commit: feat: déplacer la configuration du conteneur dans src
+a92fb011b699497f385481348b1fd65acc9b251c dd4f4795496a07ff22aa48cf27ef967db653eb6b mohidinembaye <mohidinembaye@gmail.com> 1788646786 +0000	commit: refactor: utiliser FastRoute et les DTO dans le routage
+dd4f4795496a07ff22aa48cf27ef967db653eb6b 029e206cb6d0a47770a214094b8d1382192903d9 mohidinembaye <mohidinembaye@gmail.com> 1788647245 +0000	commit: fix: injecter Capsule dans les repositories
+029e206cb6d0a47770a214094b8d1382192903d9 bdb7e8c1ec7732810a91767055994a8705f4c41b mohidinembaye <mohidinembaye@gmail.com> 1788647728 +0000	commit: feat: ajouter le style CSS de l interface
+bdb7e8c1ec7732810a91767055994a8705f4c41b f67d91e0eee4782304c91b0b00eafeb79bd74bb6 mohidinembaye <mohidinembaye@gmail.com> 1788648031 +0000	commit: feat: améliorer les vues de reservation
+f67d91e0eee4782304c91b0b00eafeb79bd74bb6 01c0f4aeec17e9849538276ea714b484b171d5ad mohidinembaye <mohidinembaye@gmail.com> 1788648098 +0000	commit: fix: accepter les dates du formulaire de reservation
+01c0f4aeec17e9849538276ea714b484b171d5ad 86f6acd8a55cfcc960fedf9e96cf17051c2c5c5a mohidinembaye <mohidinembaye@gmail.com> 1788648154 +0000	commit: fix: rendre le formulaire de reservation accessible
+86f6acd8a55cfcc960fedf9e96cf17051c2c5c5a f0b2152d710fc749a654195550195b9c88273a53 mohidinembaye <mohidinembaye@gmail.com> 1788648246 +0000	commit: feat: moderniser l interface des salles et reservations

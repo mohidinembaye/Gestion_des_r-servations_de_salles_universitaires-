@@ -31,6 +31,22 @@ final class CreerReservationDTO
         $this->dateFin = $dateFin;
     }
 
+    public static function fromArray(array $data): self
+    {
+        return new self(
+            (int) ($data['salle_id'] ?? $data['salleId']),
+            (string) $data['responsable'],
+            (string) $data['email'],
+            (string) $data['motif'],
+            $data['date_debut'] instanceof DateTimeImmutable
+                ? $data['date_debut']
+                : new DateTimeImmutable((string) $data['date_debut']),
+            $data['date_fin'] instanceof DateTimeImmutable
+                ? $data['date_fin']
+                : new DateTimeImmutable((string) $data['date_fin'])
+        );
+    }
+
     public function getSalleId(): int
     {
         return $this->salleId;

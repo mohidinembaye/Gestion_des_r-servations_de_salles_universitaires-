@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace App\Validation;
 
-use DateTimeImmutable;
+use Respect\Validation\Validatable;
+use Respect\Validation\Validator as RespectValidator;
 
 final class ReservationValidator implements ValidatorInterface
 {
@@ -14,69 +15,68 @@ final class ReservationValidator implements ValidatorInterface
         $accepted = [];
 
         $salleId = $data['salle_id'] ?? null;
-        if (filter_var($salleId, FILTER_VALIDATE_INT) === false || (int) $salleId < 1) {
+        if (!$this->isValid($salleId, RespectValidator::intVal()->positive())) {
             $errors['salle_id'] = 'La salle est invalide.';
         } else {
             $accepted['salle_id'] = (int) $salleId;
         }
 
-        $this->validateText('responsable', $data['responsable'] ?? null, 2, 120, $errors, $accepted);
+        $responsable = $this->normalizeText($data['responsable'] ?? null);
+        if (!$this->isValid($responsable, RespectValidator::stringType()->length(2, 120))) {
+            $errors['responsable'] = 'Le champ responsable doit contenir entre 2 et 120 caractères.';
+        } else {
+            $accepted['responsable'] = $responsable;
+        }
 
-        $email = $data['email'] ?? null;
-        if (!is_string($email) || filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
+        $email = $this->normalizeText($data['email'] ?? null);
+        if (!$this->isValid($email, RespectValidator::stringType()->email())) {
             $errors['email'] = 'L’adresse électronique est invalide.';
         } else {
             $accepted['email'] = $email;
         }
 
-        $this->validateText('motif', $data['motif'] ?? null, 5, 255, $errors, $accepted);
-        $this->validateDate('date_debut', $data['date_debut'] ?? null, $errors, $accepted);
-        $this->validateDate('date_fin', $data['date_fin'] ?? null, $errors, $accepted);
+        $motif = $this->normalizeText($data['motif'] ?? null);
+        if (!$this->isValid($motif, RespectValidator::stringType()->length(5, 255))) {
+            $errors['motif'] = 'Le champ motif doit contenir entre 5 et 255 caractères.';
+        } else {
+            $accepted['motif'] = $motif;
+        }
+
+        $dateDebut = $data['date_debut'] ?? null;
+        if (!$this->isValidDate($dateDebut)) {
+            $errors['date_debut'] = 'La date est invalide.';
+        } else {
+            $accepted['date_debut'] = $dateDebut;
+        }
+
+        $dateFin = $data['date_fin'] ?? null;
+        if (!$this->isValidDate($dateFin)) {
+            $errors['date_fin'] = 'La date est invalide.';
+        } else {
+            $accepted['date_fin'] = $dateFin;
+        }
 
         return new ValidationResult($errors, $accepted);
     }
 
-    private function validateText(
-        string $field,
-        mixed $value,
-        int $minimum,
-        int $maximum,
-        array &$errors,
-        array &$accepted
-    ): void {
-        if (!is_string($value) || strlen(trim($value)) < $minimum || strlen($value) > $maximum) {
-            $errors[$field] = "Le champ $field doit contenir entre $minimum et $maximum caractères.";
-            return;
-        }
-
-        $accepted[$field] = trim($value);
+    private function normalizeText(mixed $value): mixed
+    {
+        return is_string($value) ? trim($value) : $value;
     }
 
-    private function validateDate(string $field, mixed $value, array &$errors, array &$accepted): void
+    private function isValidDate(mixed $value): bool
     {
-        if (!is_string($value)) {
-            $errors[$field] = 'La date est invalide.';
-            return;
-        }
+        return $this->isValid(
+            $value,
+            RespectValidator::anyOf(
+                RespectValidator::dateTime('Y-m-d\\TH:i'),
+                RespectValidator::dateTime('Y-m-d H:i:s')
+            )
+        );
+    }
 
-        $formats = ['Y-m-d\\TH:i', 'Y-m-d H:i:s'];
-        $date = false;
-
-        foreach ($formats as $format) {
-            $candidate = DateTimeImmutable::createFromFormat($format, $value);
-            $dateErrors = DateTimeImmutable::getLastErrors();
-
-            if ($candidate !== false && ($dateErrors === false || ($dateErrors['warning_count'] === 0 && $dateErrors['error_count'] === 0))) {
-                $date = $candidate;
-                break;
-            }
-        }
-
-        if ($date === false) {
-            $errors[$field] = 'La date est invalide.';
-            return;
-        }
-
-        $accepted[$field] = $value;
+    private function isValid(mixed $value, Validatable $rule): bool
+    {
+        return RespectValidator::create($rule)->isValid($value);
     }
 }

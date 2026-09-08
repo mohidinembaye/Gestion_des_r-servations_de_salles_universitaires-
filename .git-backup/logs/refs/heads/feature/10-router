@@ -1,0 +1,3 @@
+0000000000000000000000000000000000000000 7a306224d51f11fe022532e3149bf5ad40ef208d mohidinembaye <mohidinembaye@gmail.com> 1788645622 +0000	branch: Created from HEAD
+7a306224d51f11fe022532e3149bf5ad40ef208d 17624140fad8430824f748c102b22ff9b5513e36 mohidinembaye <mohidinembaye@gmail.com> 1788645677 +0000	commit: feat: configurer le routeur FastRoute
+17624140fad8430824f748c102b22ff9b5513e36 1d33b7b62e3dff2dbe18861ce173d384e9952e64 mohidinembaye <mohidinembaye@gmail.com> 1788645832 +0000	commit: fix: centraliser les routes dans routes.php

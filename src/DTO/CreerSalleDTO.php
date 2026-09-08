@@ -26,6 +26,17 @@ final class CreerSalleDTO
         $this->active = $active;
     }
 
+    public static function fromArray(array $data): self
+    {
+        return new self(
+            (string) $data['nom'],
+            (string) $data['batiment'],
+            (int) $data['capacite'],
+            (string) $data['type'],
+            (bool) $data['active']
+        );
+    }
+
     public function getNom(): string
     {
         return $this->nom;

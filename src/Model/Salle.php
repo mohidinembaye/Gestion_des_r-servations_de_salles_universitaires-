@@ -5,12 +5,21 @@ declare(strict_types=1);
 namespace App\Model;
 
 use DateTimeImmutable;
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\HasMany;
 use Illuminate\Database\Eloquent\Model;
 
 final class Salle extends Model
 {
     protected $table = 'salles';
+
+    protected $fillable = [
+        'nom',
+        'batiment',
+        'capacite',
+        'type',
+        'active',
+    ];
 
     private ?int $id = null;
     private ?string $nom = null;
@@ -68,17 +77,36 @@ final class Salle extends Model
 
     public function isActive(): ?bool
     {
-        return $this->active ?? $this->getAttribute('active');
+        $active = $this->active ?? $this->getAttribute('active');
+
+        return $active === null ? null : (bool) $active;
     }
 
     public function getCreatedAt(): ?DateTimeImmutable
     {
-        return $this->createdAt ?? $this->getAttribute('created_at');
+        return $this->toImmutableDate($this->createdAt ?? $this->getAttribute('created_at'));
     }
 
     public function getUpdatedAt(): ?DateTimeImmutable
     {
-        return $this->updatedAt ?? $this->getAttribute('updated_at');
+        return $this->toImmutableDate($this->updatedAt ?? $this->getAttribute('updated_at'));
+    }
+
+    private function toImmutableDate(mixed $value): ?DateTimeImmutable
+    {
+        if ($value === null) {
+            return null;
+        }
+
+        if ($value instanceof DateTimeImmutable) {
+            return $value;
+        }
+
+        if ($value instanceof DateTimeInterface) {
+            return DateTimeImmutable::createFromInterface($value);
+        }
+
+        return new DateTimeImmutable((string) $value);
     }
 
     public function reservations(): HasMany

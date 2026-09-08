@@ -1,0 +1,32 @@
+[branch "main"]
+	gk-last-accessed = 2026-09-05T20:26:43.594Z
+	gk-last-modified = 2026-09-05T20:26:43.594Z
+[branch "feature/02-eloquent"]
+	gk-last-accessed = 2026-09-05T20:41:41.804Z
+	gk-last-modified = 2026-09-05T20:41:41.804Z
+[branch "feature/03-modeles"]
+	gk-last-accessed = 2026-09-05T21:14:51.244Z
+	gk-last-modified = 2026-09-05T21:14:51.244Z
+[branch "feature/04-donnees-initiales"]
+	gk-last-accessed = 2026-09-05T21:28:19.417Z
+	gk-last-modified = 2026-09-05T21:29:40.814Z
+[branch "feature/05-validation"]
+	gk-last-accessed = 2026-09-05T21:34:54.155Z
+	gk-last-modified = 2026-09-05T21:34:54.155Z
+[branch "feature/06-dto"]
+	gk-last-accessed = 2026-09-05T21:39:10.319Z
+	gk-last-modified = 2026-09-05T21:39:10.319Z
+[branch "feature/07-repositories"]
+	gk-last-accessed = 2026-09-05T21:43:01.977Z
+	gk-last-modified = 2026-09-05T21:43:01.977Z
+[branch "feature/08-services"]
+	gk-last-accessed = 2026-09-05T21:58:24.032Z
+[branch "feature/09-interface-web"]
+	gk-last-accessed = 2026-09-05T21:59:36.154Z
+	gk-last-modified = 2026-09-05T21:59:36.154Z
+[branch "feature/10-router"]
+	gk-last-accessed = 2026-09-05T22:02:53.356Z
+	gk-last-modified = 2026-09-05T22:03:48.071Z
+[branch "feature/11-container"]
+	gk-last-accessed = 2026-09-07T20:40:17.464Z
+	gk-last-modified = 2026-09-07T12:20:14.503Z
