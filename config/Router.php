@@ -46,8 +46,8 @@ final class Router
 
     private function parameters(array $parameters): array
     {
-        return array_map(static function (string $value): int {
-            return (int) $value;
-        }, $parameters);
+        return array_values(array_map(static function (string $value): int|string {
+            return ctype_digit($value) ? (int) $value : $value;
+        }, $parameters));
     }
 }

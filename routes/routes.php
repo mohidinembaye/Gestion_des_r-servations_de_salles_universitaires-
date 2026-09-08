@@ -18,5 +18,7 @@ return static function (RouteCollector $routes): void {
     $routes->addRoute('GET', '/reservations/create', [ReservationController::class, 'create']);
     $routes->addRoute('POST', '/reservations', [ReservationController::class, 'store']);
     $routes->addRoute('GET', '/reservations/{id:\\d+}', [ReservationController::class, 'show']);
+    $routes->addRoute('GET', '/reservations/{id:\\d+}/edit', [ReservationController::class, 'edit']);
+    $routes->addRoute('POST', '/reservations/{id:\\d+}/edit', [ReservationController::class, 'update']);
     $routes->addRoute('POST', '/reservations/{id:\\d+}/cancel', [ReservationController::class, 'cancel']);
 };

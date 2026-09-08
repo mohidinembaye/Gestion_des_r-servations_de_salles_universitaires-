@@ -5,6 +5,15 @@ $dateDebut = $reservation->getDateDebut();
 $dateFin = $reservation->getDateFin();
 $isConfirmed = $reservation->getStatut() === 'confirmée';
 ?>
+<?php if (($_GET['updated'] ?? '') === '1'): ?>
+    <div class="feedback feedback-success" role="status">
+        <span class="feedback-mark" aria-hidden="true">✓</span>
+        <div>
+            <strong>Réservation modifiée avec succès.</strong>
+            <p>Les modifications apportées au créneau ont bien été enregistrées.</p>
+        </div>
+    </div>
+<?php endif; ?>
 <div class="detail-shell">
     <div class="detail-header">
         <div>
@@ -44,6 +53,7 @@ $isConfirmed = $reservation->getStatut() === 'confirmée';
     </dl>
     <div class="detail-actions">
         <?php if ($isConfirmed): ?>
+            <a class="button-link" href="/reservations/<?= (int) $reservation->getId() ?>/edit">Modifier la réservation</a>
             <form class="detail-cancel-form" method="post" action="/reservations/<?= (int) $reservation->getId() ?>/cancel">
                 <button class="button-danger" type="submit">Annuler la réservation</button>
             </form>

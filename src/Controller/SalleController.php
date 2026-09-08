@@ -68,7 +68,7 @@ final class SalleController
         $dto = CreerSalleDTO::fromArray($result->data());
         $this->salles->modifier($id, $dto);
 
-        header('Location: /salles/' . $id);
+        header('Location: /salles/' . $id . '?updated=1');
 
         return '';
     }

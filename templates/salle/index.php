@@ -24,7 +24,7 @@
         <a class="room-card-link" href="/salles/<?= (int) $salle->getId() ?>">
             <div class="card-topline">
                 <span class="room-type"><?= htmlspecialchars((string) $salle->getType(), ENT_QUOTES, 'UTF-8') ?></span>
-                <span class="status status-active">Active</span>
+                <span class="status <?= $salle->isActive() ? 'status-active' : 'status-cancelled' ?>"><?= $salle->isActive() ? 'Active' : 'Inactive' ?></span>
             </div>
             <h2><?= htmlspecialchars((string) $salle->getNom(), ENT_QUOTES, 'UTF-8') ?></h2>
             <p class="room-building"><?= htmlspecialchars((string) $salle->getBatiment(), ENT_QUOTES, 'UTF-8') ?></p>

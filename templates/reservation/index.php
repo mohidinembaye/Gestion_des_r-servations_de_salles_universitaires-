@@ -46,6 +46,7 @@
                         <div class="booking-actions">
                             <span class="status <?= $reservation->getStatut() === 'confirmée' ? 'status-active' : 'status-cancelled' ?>"><?= htmlspecialchars((string) $reservation->getStatut(), ENT_QUOTES, 'UTF-8') ?></span>
                             <?php if ($reservation->getStatut() === 'confirmée'): ?>
+                                <a class="button-link" href="/reservations/<?= (int) $reservation->getId() ?>/edit">Modifier</a>
                                 <form class="booking-cancel-form" method="post" action="/reservations/<?= (int) $reservation->getId() ?>/cancel">
                                     <button class="button-danger button-compact" type="submit" aria-label="Annuler la réservation de <?= htmlspecialchars($roomName, ENT_QUOTES, 'UTF-8') ?>">Annuler</button>
                                 </form>

@@ -58,34 +58,85 @@ final class ReservationController
         ]);
     }
 
+    public function edit(int $id): string
+    {
+        $reservation = $this->reservations->trouver($id);
+
+        if ($reservation === null) {
+            return $this->view->render('error/404');
+        }
+
+        return $this->view->render('reservation/form', [
+            'reservation' => $reservation,
+            'salles' => $this->salles->lister(),
+            'errors' => [],
+            'values' => [],
+        ]);
+    }
+
     public function store(array $data): string
-{
-    $result = $this->validator->validate($data);
+    {
+        $result = $this->validator->validate($data);
 
-    if (!$result->isValid()) {
-        return $this->view->render('reservation/form', [
-            'salles' => $this->salles->lister(),
-            'errors' => $result->errors(),
-            'values' => $data,
-        ]);
+        if (!$result->isValid()) {
+            return $this->view->render('reservation/form', [
+                'salles' => $this->salles->lister(),
+                'errors' => $result->errors(),
+                'values' => $data,
+            ]);
+        }
+
+        $dto = CreerReservationDTO::fromArray($result->data());
+
+        try {
+            $this->creation->executer($dto);
+        } catch (\InvalidArgumentException $e) {
+            return $this->view->render('reservation/form', [
+                'salles' => $this->salles->lister(),
+                'errors' => ['date_debut' => $e->getMessage()],
+                'values' => $data,
+            ]);
+        }
+
+        header('Location: /reservations');
+
+        return '';
     }
 
-    $dto = CreerReservationDTO::fromArray($result->data());
+    public function update(int $id, array $data): string
+    {
+        $result = $this->validator->validate($data);
 
-    try {
-        $this->creation->executer($dto);
-    } catch (\InvalidArgumentException $e) {
-        return $this->view->render('reservation/form', [
-            'salles' => $this->salles->lister(),
-            'errors' => ['date_debut' => $e->getMessage()],
-            'values' => $data,
-        ]);
+        if (!$result->isValid()) {
+            return $this->view->render('reservation/form', [
+                'reservation' => $this->reservations->trouver($id),
+                'salles' => $this->salles->lister(),
+                'errors' => $result->errors(),
+                'values' => $data,
+            ]);
+        }
+
+        if ($this->reservations->trouver($id) === null) {
+            return $this->view->render('error/404');
+        }
+
+        $dto = CreerReservationDTO::fromArray($result->data());
+
+        try {
+            $this->reservations->modifier($id, $dto);
+        } catch (\InvalidArgumentException $e) {
+            return $this->view->render('reservation/form', [
+                'reservation' => $this->reservations->trouver($id),
+                'salles' => $this->salles->lister(),
+                'errors' => ['date_debut' => $e->getMessage()],
+                'values' => $data,
+            ]);
+        }
+
+        header('Location: /reservations/' . $id . '?updated=1');
+
+        return '';
     }
-
-    header('Location: /reservations');
-
-    return '';
-}
 
     public function cancel(int $id): string
     {

@@ -66,6 +66,25 @@ final class EloquentReservationRepository implements ReservationRepositoryInterf
         return $reservation;
     }
 
+    public function modifier(int $id, CreerReservationDTO $dto): Reservation
+    {
+        $reservation = $this->trouver($id);
+
+        if ($reservation === null) {
+            throw new \RuntimeException('Réservation introuvable.');
+        }
+
+        $reservation->setAttribute('salle_id', $dto->getSalleId());
+        $reservation->setAttribute('responsable', $dto->getResponsable());
+        $reservation->setAttribute('email', $dto->getEmail());
+        $reservation->setAttribute('motif', $dto->getMotif());
+        $reservation->setAttribute('date_debut', $dto->getDateDebut());
+        $reservation->setAttribute('date_fin', $dto->getDateFin());
+        $reservation->save();
+
+        return $reservation;
+    }
+
     public function annuler(Reservation $reservation): Reservation
     {
         $reservation->setAttribute('statut', 'annulée');

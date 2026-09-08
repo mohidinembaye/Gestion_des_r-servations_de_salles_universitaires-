@@ -19,5 +19,7 @@ interface ReservationRepositoryInterface
 
     public function enregistrer(CreerReservationDTO $dto): Reservation;
 
+    public function modifier(int $id, CreerReservationDTO $dto): Reservation;
+
     public function annuler(Reservation $reservation): Reservation;
 }
