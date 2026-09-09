@@ -1,12 +1,15 @@
 <?php
 
 declare(strict_types=1);
-
+use App\Controller\AuthController;
 use App\Controller\ReservationController;
 use App\Controller\SalleController;
 use FastRoute\RouteCollector;
 
 return static function (RouteCollector $routes): void {
+    $routes->addRoute('GET', '/login', [AuthController::class, 'showLoginForm']);
+    $routes->addRoute('POST', '/login', [AuthController::class, 'login']);
+    $routes->addRoute('GET', '/logout', [AuthController::class, 'logout']);
     $routes->addRoute('GET', '/', [SalleController::class, 'index']);
     $routes->addRoute('GET', '/salles', [SalleController::class, 'index']);
     $routes->addRoute('GET', '/salles/create', [SalleController::class, 'create']);
