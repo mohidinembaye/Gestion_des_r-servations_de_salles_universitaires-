@@ -13,7 +13,7 @@ use PHPUnit\Framework\TestCase;
 use DI\ContainerBuilder;
 use Illuminate\Database\Capsule\Manager as Capsule;
 
-final class EloquentTest extends TestCase
+final class s extends TestCase
 {
     /**
      * Cette méthode s'exécute AVANT chaque test d'intégration pour connecter MySQL

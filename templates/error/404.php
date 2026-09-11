@@ -1,6 +1,5 @@
-<div class="state-panel">
-    <p class="eyebrow">Navigation</p>
-    <h1>404 - Page introuvable</h1>
-    <p>La page demandée n’existe pas.</p>
-    <a class="button-link" href="/">Retour à l’accueil</a>
+<div class="error-page">
+    <h1>404 — Page non trouvée</h1>
+    <p>La page que vous recherchez est introuvable.</p>
+    <a class="button" href="/">Retour à l'accueil</a>
 </div>

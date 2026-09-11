@@ -802,7 +802,7 @@ textarea[aria-invalid='true'] {
     border: 0;
 }
 
-@media (max-width: 700px) {
+@media (max-width: 500px) {
     .site-header {
         padding: var(--space-3) 1rem;
     }

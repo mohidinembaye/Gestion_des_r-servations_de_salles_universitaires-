@@ -4,34 +4,42 @@ declare(strict_types=1);
 
 namespace App\View;
 
+use App\Config\EnvironnementConfig;
+use App\Http\HtmlResponseStrategy;
+use App\Http\JsonResponseStrategy;
+use App\Http\ResponseFormatContext;
+
 final class ViewRenderer
 {
-    public function render(string $template, array $data = []): string
-    {
-        $path = dirname(__DIR__, 2) . '/templates/' . $template . '.php';
+    public function __construct(
+        private readonly EnvironnementConfig $environnement,
+        private readonly ResponseFormatContext $formatContext
+    ) {
+    }
 
-        if (!is_file($path)) {
-            throw new \RuntimeException('Vue introuvable : ' . $template);
+    public function render(string $template, array $data = [], bool $withLayout = true): string
+    {
+        $format = $this->formatDemande();
+
+        if ($format === 'json') {
+            return $this->formatContext->render($format, $data);
         }
 
-        $content = $this->renderTemplate($path, $data);
+        $content = $this->formatContext->render($format, $data + ['_template' => $template]);
 
-        if ($template === 'layout/base') {
+        if ($template === 'layout/base' || !$withLayout) {
             return $content;
         }
 
-        return $this->renderTemplate(
-            dirname(__DIR__, 2) . '/templates/layout/base.php',
-            $data + ['content' => $content, 'title' => $data['title'] ?? 'Réservations']
-        );
+        return $this->formatContext->render($format, $data + [
+            '_template' => 'layout/base',
+            'content' => $content,
+            'title' => $data['title'] ?? 'Réservations'
+        ]);
     }
 
-    private function renderTemplate(string $path, array $data): string
+    private function formatDemande(): string
     {
-        extract($data, EXTR_SKIP);
-        ob_start();
-        require $path;
-
-        return (string) ob_get_clean();
+        return $_GET['format'] ?? $this->environnement->formatSortie();
     }
 }

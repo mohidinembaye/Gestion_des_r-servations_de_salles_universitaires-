@@ -12,7 +12,7 @@ final class ContainerFactory
     public function create(): Container
     {
         $builder = new ContainerBuilder();
-        $builder->addDefinitions(__DIR__ . '/container.php');
+        $builder->addDefinitions(dirname(__DIR__, 2) . '/config/container.php');
 
         return $builder->build();
     }

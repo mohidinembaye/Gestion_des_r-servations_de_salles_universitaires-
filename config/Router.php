@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Config;
 
+use App\View\ViewRenderer;
 use DI\Container;
 use FastRoute\Dispatcher;
 
@@ -11,7 +12,8 @@ final class Router
 {
     public function __construct(
         private Dispatcher $dispatcher,
-        private Container $container
+        private Container $container,
+        private ViewRenderer $view
     ) {
     }
 
@@ -22,14 +24,19 @@ final class Router
 
         if ($route[0] === Dispatcher::NOT_FOUND) {
             http_response_code(404);
-            require dirname(__DIR__) . '/templates/error/404.php';
+            echo $this->view->render('error/404', [
+                'title' => 'Page non trouvée',
+                'errors' => ['message' => 'La page demandée est introuvable.']
+            ]);
             return;
         }
 
         if ($route[0] === Dispatcher::METHOD_NOT_ALLOWED) {
             http_response_code(405);
-            header('Allow: ' . implode(', ', $route[1]));
-            require dirname(__DIR__) . '/templates/error/405.php';
+            echo $this->view->render('error/405', [
+                'title' => 'Méthode non autorisée',
+                'errors' => ['message' => 'La méthode HTTP utilisée n\'est pas autorisée pour cette ressource.']
+            ]);
             return;
         }
 
@@ -37,7 +44,7 @@ final class Router
         $instance = $this->container->get($controller);
         $parameters = $this->parameters($route[2]);
 
-        if ($method === 'POST' && in_array($action, ['store', 'update'], true)) {
+        if ($method === 'POST') {
             $parameters[] = $_POST;
         }
 
