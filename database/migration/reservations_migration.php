@@ -20,7 +20,7 @@ return static function (Builder $schema, string $action): void {
             $table->string('motif', 255);
             $table->dateTime('date_debut');
             $table->dateTime('date_fin');
-            $table->enum('statut', ['confirmée', 'annulée'])->default('confirmée');
+            $table->string('statut', 20)->default('confirmée');
             $table->timestamps();
 
             $table->index(['salle_id', 'date_debut', 'date_fin'], 'idx_reservations_salle_dates');
@@ -28,6 +28,17 @@ return static function (Builder $schema, string $action): void {
         });
         echo "Table 'reservations' créée avec succès.\n";
 
+        return;
+    }
+
+    if ($action === 'down') {
+        if ($schema->hasTable('reservations')) {
+            $schema->drop('reservations');
+            echo "Table 'reservations' supprimée.\n";
+            return;
+        }
+
+        echo "Table 'reservations' n'existe pas.\n";
         return;
     }
 

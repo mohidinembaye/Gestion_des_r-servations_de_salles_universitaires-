@@ -6,6 +6,9 @@ namespace App\View;
 
 final class ViewRenderer
 {
+    public function __construct() {
+    }
+
     public function render(string $template, array $data = []): string
     {
         $path = dirname(__DIR__, 2) . '/templates/' . $template . '.php';

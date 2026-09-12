@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App;
 
+use App\Database\Migration\CreatePostgresqlSchema;
+use App\Database\Migration\CreateResponsablesTable;
 use Illuminate\Database\Capsule\Manager as Capsule;
 
 final class Application
@@ -24,6 +26,17 @@ final class Application
         $seeder = require self::MIGRATIONS_PATH . '/seeder.php';
 
         switch ($commande) {
+            case 'migrate:postgres':
+            case 'postgres:migrate':
+                echo "==> Exécution de la migration PostgreSQL (CreatePostgresqlSchema)...\n";
+                (new CreatePostgresqlSchema())->up($schema);
+                break;
+
+            case 'postgres:rollback':
+                echo "==> Annulation du schéma PostgreSQL (CreatePostgresqlSchema)...\n";
+                (new CreatePostgresqlSchema())->down($schema);
+                break;
+
             case 'salles_migration:execute':
                 echo "==> Exécution de la migration 'salles'...\n";
                 $migrerSalles($schema, 'up');
@@ -51,10 +64,16 @@ final class Application
 
             case 'fresh':
                 echo "==> Réinitialisation complète (fresh)...\n";
-                $migrerReservations($schema, 'down');
-                $migrerSalles($schema, 'down');
-                $migrerSalles($schema, 'up');
-                $migrerReservations($schema, 'up');
+                $driver = $this->capsule->getConnection()->getDriverName();
+                if ($driver === 'pgsql') {
+                    (new CreatePostgresqlSchema())->down($schema);
+                    (new CreatePostgresqlSchema())->up($schema);
+                } else {
+                    $migrerReservations($schema, 'down');
+                    $migrerSalles($schema, 'down');
+                    $migrerSalles($schema, 'up');
+                    $migrerReservations($schema, 'up');
+                }
                 $seeder();
                 echo "Base de données réinitialisée et peuplée avec succès.\n";
                 break;
@@ -63,6 +82,8 @@ final class Application
                 echo "Commande non reconnue : '$commande'\n\n";
                 echo "Utilisation : php mohidine [commande]\n";
                 echo "Commandes disponibles :\n";
+                echo "  migrate:postgres                : Créer le schéma complet sous PostgreSQL\n";
+                echo "  postgres:rollback               : Supprimer le schéma sous PostgreSQL\n";
                 echo "  salles_migration:execute        : Créer la table 'salles'\n";
                 echo "  salles_migration:rollback       : Supprimer la table 'salles'\n";
                 echo "  reservations_migration:execute  : Créer la table 'reservations'\n";

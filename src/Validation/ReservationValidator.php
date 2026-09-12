@@ -70,6 +70,7 @@ final class ReservationValidator implements ValidatorInterface
             $value,
             RespectValidator::anyOf(
                 RespectValidator::dateTime('Y-m-d\\TH:i'),
+                RespectValidator::dateTime('Y-m-d\\TH:i:s'),
                 RespectValidator::dateTime('Y-m-d H:i:s')
             )
         );

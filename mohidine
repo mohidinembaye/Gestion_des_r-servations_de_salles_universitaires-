@@ -5,18 +5,20 @@ declare(strict_types=1);
 
 use App\Application;
 use Dotenv\Dotenv;
-use Illuminate\Database\Capsule\Manager as Capsule;
 
 require __DIR__ . '/vendor/autoload.php';
 
 Dotenv::createImmutable(__DIR__)->safeLoad();
 
+$driver = $_ENV['DB_DRIVER'] ?? 'pgsql';
+$defaultPort = ($driver === 'pgsql') ? 5432 : 3306;
+
 $config = [
-    'driver' => $_ENV['DB_DRIVER'] ?? 'mysql',
+    'driver' => $driver,
     'host' => $_ENV['DB_HOST'] ?? '127.0.0.1',
-    'port' => (int) ($_ENV['DB_PORT'] ?? 3306),
+    'port' => (int) ($_ENV['DB_PORT'] ?? $defaultPort),
     'database' => $_ENV['DB_DATABASE'] ?? 'reservation_salles',
-    'username' => $_ENV['DB_USERNAME'] ?? 'root',
+    'username' => $_ENV['DB_USERNAME'] ?? ($driver === 'pgsql' ? 'postgres' : 'root'),
     'password' => $_ENV['DB_PASSWORD'] ?? '',
 ];
 

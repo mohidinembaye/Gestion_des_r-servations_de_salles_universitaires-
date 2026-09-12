@@ -1,0 +1,42 @@
+[
+    {
+        "id": 1,
+        "salle_id": 1,
+        "responsable": "Marie Dupont",
+        "email": "marie.dupont@universite.fr",
+        "motif": "Cours magistral",
+        "date_debut": "2026-09-10T08:00:00",
+        "date_fin": "2026-09-10T10:00:00",
+        "statut": "confirmée"
+    },
+    {
+        "id": 2,
+        "salle_id": 3,
+        "responsable": "Jean Martin",
+        "email": "jean.martin@universite.fr",
+        "motif": "TP Chimie",
+        "date_debut": "2026-09-10T14:00:00",
+        "date_fin": "2026-09-10T17:00:00",
+        "statut": "confirmée"
+    },
+    {
+        "id": 3,
+        "salle_id": 1,
+        "responsable": "Test User",
+        "email": "test@test.com",
+        "motif": "Test Motif",
+        "date_debut": "2026-09-12T09:00:00",
+        "date_fin": "2026-09-12T11:00:00",
+        "statut": "confirmée"
+    },
+    {
+        "id": 4,
+        "salle_id": 3,
+        "responsable": "HTML User",
+        "email": "html@test.com",
+        "motif": "HTML Test",
+        "date_debut": "2026-09-14T09:00:00",
+        "date_fin": "2026-09-14T11:00:00",
+        "statut": "confirmée"
+    }
+]

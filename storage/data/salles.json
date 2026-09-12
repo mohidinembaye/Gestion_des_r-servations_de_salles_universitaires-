@@ -1,0 +1,34 @@
+[
+    {
+        "id": 1,
+        "nom": "Amphithéâtre A",
+        "batiment": "Bâtiment principal",
+        "capacite": 250,
+        "type": "amphitheatre",
+        "active": true
+    },
+    {
+        "id": 3,
+        "nom": "Laboratoire Chimie",
+        "batiment": "Bâtiment scientifique",
+        "capacite": 24,
+        "type": "laboratoire",
+        "active": true
+    },
+    {
+        "id": 5,
+        "nom": "Salle de réunion",
+        "batiment": "Bâtiment principal",
+        "capacite": 12,
+        "type": "salle_de_reunion",
+        "active": true
+    },
+    {
+        "id": 6,
+        "nom": "Salle JSON Test",
+        "batiment": "Test Batiment",
+        "capacite": 100,
+        "type": "amphitheatre",
+        "active": true
+    }
+]
